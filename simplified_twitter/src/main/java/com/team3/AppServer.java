@@ -65,6 +65,7 @@ public class AppServer{
                 String password = request.getLogMsg().getPassword();
                 String cryptPassword = Utility.getSHA(password);
                 userLogMap.put(userName, cryptPassword);
+                /* if username exist, fail to register */
             } else if (action.equals("tweet")) {
 
             } else if (action.equals("read")) {
@@ -172,7 +173,7 @@ public class AppServer{
             }
         }
 
-        AppServer appServer = new AppServer();
+        AppServer appServer = new AppServer(port, serverConfig);
         appServer.run();
         appServer.blockUntilShutdown();
     }
