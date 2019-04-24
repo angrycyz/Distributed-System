@@ -37,6 +37,7 @@ public class LoadBalancer {
             String address = appServerNode.getKey().toLowerCase().equals("localhost")? LOCAL_IP : appServerNode.getKey();
             realNodes.add(address + ":" + String.valueOf(appServerNode.getValue()));
         }
+
         /* add virtual nodes */
         for (String str: realNodes) {
             for (int i = 0; i < VIRTUAL_NODES_NUM; i++) {
@@ -77,7 +78,7 @@ public class LoadBalancer {
     class LoadServiceImpl extends LoadServiceGrpc.LoadServiceImplBase {
         @Override
         public void balance(ClientRequest request, StreamObserver<BalanceResponse> responseObserver) {
-            String nodeAddr = getServer(request.getAddress() + request.getRequestId());
+            String nodeAddr = getServer(request.getUserName());
             logger.info("Forward to app server " + nodeAddr);
             int retry = 0;
             boolean firsttime = true;
