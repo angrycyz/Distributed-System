@@ -22,7 +22,7 @@ message ClientRequest {
     int64 epoch = 4;
     bool loggedIn = 5;
     // optional, created by logInOut service, main db updated by first tweet
-    string userId = 6;
+    string userName = 6;
     // action: login, logout, signup, tweet, read, follow, unfollow
     string action = 7;
     // optional, proto3 eliminate this keyword
