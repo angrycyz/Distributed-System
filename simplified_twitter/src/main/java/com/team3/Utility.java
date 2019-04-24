@@ -7,8 +7,10 @@ import javafx.util.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +49,27 @@ public class Utility {
                                 elementNode.get(PORT).asInt()));
             }
             return addrList;
+        }
+        return null;
+    }
+
+    /* cryptographic hash */
+    public static String getSHA(String input)
+    {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] messageDigest = md.digest(input.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+
+            String hashtext = no.toString(16);
+
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+
+            return hashtext;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
         }
         return null;
     }
